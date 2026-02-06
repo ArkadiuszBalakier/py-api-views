@@ -1,6 +1,11 @@
-
-from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, \
-    DestroyModelMixin
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import (
+    ListModelMixin,
+    CreateModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+)
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 
@@ -9,12 +14,18 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
 from cinema.models import Movie, Genre, Actor, CinemaHall
-from cinema.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CinemaHallSerializer
+from cinema.serializers import (
+    MovieSerializer,
+    GenreSerializer,
+    ActorSerializer,
+    CinemaHallSerializer,
+)
 
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+
 
 class GenreListView(APIView):
 
@@ -28,6 +39,7 @@ class GenreListView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class GenreDetailView(APIView):
 
@@ -56,21 +68,25 @@ class GenreDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ActorListView(generics.ListCreateAPIView):
+class ActorListView(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-class ActorDetailView(generics.RetrieveUpdateDestroyAPIView):
+
+class ActorDetailView(
+    GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
+):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-class CinemaHallViewSet(GenericViewSet,
-                        ListModelMixin,
-                        CreateModelMixin,
-                        RetrieveModelMixin,
-                        UpdateModelMixin,
-                        DestroyModelMixin
-                        ):
+
+class CinemaHallViewSet(
+    GenericViewSet,
+    ListModelMixin,
+    CreateModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
-
