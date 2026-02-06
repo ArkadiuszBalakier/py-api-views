@@ -57,7 +57,7 @@ class GenreDetailView(APIView):
 
     def patch(self, request, pk):
         genre = get_object_or_404(Genre, pk=pk)
-        serializer = GenreSerializer(instance=genre, data=request.data)
+        serializer = GenreSerializer(instance=genre, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -72,11 +72,11 @@ class ActorListView(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-    def get(self, pk, *args, **kwargs):
-        return self.list(pk, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    def post(self, pk, *args, **kwargs):
-        return self.create(pk, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class ActorDetailView(
@@ -85,17 +85,17 @@ class ActorDetailView(
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-    def get(self, pk, *args, **kwargs):
-        return self.retrieve(pk, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
-    def put(self, pk, *args, **kwargs):
-        return self.update(pk, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
-    def patch(self, pk, *args, **kwargs):
-        return self.partial_update(pk, *args, **kwargs)
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
-    def delete(self, pk, *args, **kwargs):
-        return self.destroy(pk, *args, **kwargs)
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class CinemaHallViewSet(
