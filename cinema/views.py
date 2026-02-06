@@ -1,13 +1,16 @@
 from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, \
+    DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
-from cinema.models import Movie, Genre, Actor
-from cinema.serializers import MovieSerializer, GenreSerializer, ActorSerializer
+from cinema.models import Movie, Genre, Actor, CinemaHall
+from cinema.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CinemaHallSerializer
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -55,5 +58,13 @@ class ActorDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-
+class CinemaHallViewSet(GenericViewSet,
+                        ListModelMixin,
+                        CreateModelMixin,
+                        RetrieveModelMixin,
+                        UpdateModelMixin,
+                        DestroyModelMixin
+                        ):
+    queryset = CinemaHall.objects.all()
+    serializer_class = CinemaHallSerializer
 
