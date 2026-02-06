@@ -1,5 +1,4 @@
-from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView
+
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, \
     DestroyModelMixin
 from rest_framework.response import Response
