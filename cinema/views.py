@@ -71,11 +71,13 @@ class GenreDetailView(APIView):
 class ActorListView(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+
     def get(self, pk, *args, **kwargs):
         return self.list(pk, *args, **kwargs)
 
     def post(self, pk, *args, **kwargs):
         return self.create(pk, *args, **kwargs)
+
 
 class ActorDetailView(
     GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
@@ -85,12 +87,16 @@ class ActorDetailView(
 
     def get(self, pk, *args, **kwargs):
         return self.retrieve(pk, *args, **kwargs)
+
     def put(self, pk, *args, **kwargs):
         return self.update(pk, *args, **kwargs)
+
     def patch(self, pk, *args, **kwargs):
         return self.partial_update(pk, *args, **kwargs)
+
     def delete(self, pk, *args, **kwargs):
         return self.destroy(pk, *args, **kwargs)
+
 
 class CinemaHallViewSet(
     GenericViewSet,
