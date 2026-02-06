@@ -13,12 +13,14 @@ class ActorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
         fields = "__all__"
+        partial = True
 
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = "__all__"
+        partial = True
 
 
 class CinemaHallSerializer(serializers.ModelSerializer):
